@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Comprar - Papelería Mary</title>
+
+  <style>
+    body {
+      font-family: 'Special Elite', monospace;
+      background-color: #fffaf7;
+      color: #3e2c1c;
+      margin: 0;
+      padding: 20px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h1, h2 {
+      font-family: 'Pacifico', cursive;
+      color: #5c3d2e;
+      text-align: center;
+    }
+    .categoria {
+      background: #f8d7da;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(107, 91, 60, 0.2);
+      margin-bottom: 20px;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li {
+      padding: 8px 12px;
+      background: #fff0f2;
+      margin: 6px 0;
+      border-radius: 8px;
+      box-shadow: inset 2px 2px 5px rgba(107, 91, 60, 0.1);
+      font-weight: 600;
+    }
+    .total {
+      font-weight: bold;
+      font-size: 1.4em;
+      color: #5c3d2e;
+      text-shadow: 1px 1px 2px #d19fc2;
+      text-align: right;
+      margin-bottom: 30px;
+    }
+    form {
+      background: #f8d7da;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(107, 91, 60, 0.2);
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ba8cb5;
+      margin-top: 5px;
+      font-family: 'Special Elite', monospace;
+    }
+    button {
+      margin-top: 20px;
+      background-color: #d19fc2;
+      color: #3e2c1c;
+      font-family: 'Pacifico', cursive;
+      font-size: 1.2em;
+      font-weight: bold;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 2px 2px 8px rgba(107, 91, 60, 0.4);
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #ba8cb5;
+      color: #fffaf7;
+    }
+    .vacío {
+      font-style: italic;
+      color: #999;
+      text-align: center;
+      font-size: 1.2em;
+      margin: 30px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🛒 Resumen de tu compra</h1>
+  <div id="carritoContainer"></div>
+
+  <div class="total" id="totalPago"></div>
+
+  <form id="formPedido" method="POST" action="procesar_pedido.php">
+    <h2>Datos para el pedido</h2>
+
+    <label for="nombre_cliente">Nombre completo *</label>
+    <input type="text" id="nombre_cliente" name="nombre_cliente" required />
+
+    <label for="email">Correo electrónico *</label>
+    <input type="email" id="email" name="email" required />
+
+    <label for="telefono">Teléfono</label>
+    <input type="tel" id="telefono" name="telefono" />
+
+    <label for="direccion">Dirección de entrega *</label>
+    <textarea id="direccion" name="direccion" rows="3" required></textarea>
+
+    <!-- Campos ocultos para enviar carrito y total -->
+    <input type="hidden" name="carrito" id="inputCarrito" />
+    <input type="hidden" name="total" id="inputTotal" />
+
+    <button type="submit">Finalizar compra</button>
+  </form>
+
+  <script>
+    // Ejemplo de categorías para agrupar (opcional)
+    const categorias = [
+      "Papelería básica",
+      "Útiles escolares",
+      "Material de oficina",
+      "Arte y manualidades",
+      "Impresión y tecnología",
+      "Papelería personalizada",
+      "Regalos y complementos",
+      "Ofertas"
+    ];
+
+    function agruparPorCategoria(items) {
+      const agrupado = {};
+      categorias.forEach(cat => agrupado[cat] = []);
+      agrupado["Otros"] = [];
+
+      items.forEach(item => {
+        if(item.categoria && categorias.includes(item.categoria)) {
+          agrupado[item.categoria].push(item);
+        } else {
+          agrupado["Otros"].push(item);
+        }
+      });
+
+      return agrupado;
+    }
+
+    function mostrarCarrito() {
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      const contenedor = document.getElementById('carritoContainer');
+      const totalPago = document.getElementById('totalPago');
+
+      if(carrito.length === 0){
+        contenedor.innerHTML = `<p class="vacío">Tu carrito está vacío.</p>`;
+        totalPago.textContent = '';
+        document.getElementById('formPedido').style.display = 'none';
+        return;
+      }
+
+      const agrupado = agruparPorCategoria(carrito);
+      let html = "";
+
+      for(const cat of categorias.concat("Otros")){
+        if(agrupado[cat] && agrupado[cat].length > 0){
+          html += `<div class="categoria">
+            <h3>${cat}</h3>
+            <ul>`;
+          agrupado[cat].forEach(item => {
+            html += `<li>${item.nombre} - $${item.precio.toFixed(2)} MXN</li>`;
+          });
+          html += `</ul></div>`;
+        }
+      }
+
+      contenedor.innerHTML = html;
+
+      const total = carrito.reduce((acc, item) => acc + item.precio, 0);
+      totalPago.textContent = `Total a pagar: $${total.toFixed(2)} MXN`;
+
+      // Poner carrito y total en inputs ocultos para enviar por POST
+      document.getElementById('inputCarrito').value = JSON.stringify(carrito);
+      document.getElementById('inputTotal').value = total.toFixed(2);
+    }
+
+    mostrarCarrito();
+
+    // Opcional: si quieres borrar carrito al enviar el formulario
+    document.getElementById('formPedido').addEventListener('submit', () => {
+      localStorage.removeItem('carrito');
+    });
+  </script>
+
+</body>
+</html>

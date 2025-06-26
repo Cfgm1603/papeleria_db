@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Favoritos - Papelería Mary</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --rosa-suave: #F8D7DA;
+      --rosa-banner: #FDE4E4;
+      --lila-categoria: #D19FC2;
+      --lila-hover: #ba8cb5;
+      --beige-claro: #fffaf7;
+    }
+
+    body {
+      font-family: 'Special Elite', monospace;
+      background-color: var(--beige-claro);
+      background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #3e2c1c;
+    }
+
+    header {
+      background-color: var(--rosa-suave);
+      padding: 30px;
+      box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo img {
+      width: 120px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 32px;
+      margin-top: 10px;
+      color: #5c3d2e;
+    }
+
+    .volver-btn {
+      margin: 20px auto;
+      display: inline-block;
+      background-color: var(--lila-categoria);
+      color: #000;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .volver-btn:hover {
+      background-color: var(--lila-hover);
+    }
+
+    #contador-compras {
+      font-family: 'Special Elite', monospace;
+      font-size: 20px;
+      margin: 20px 0;
+      font-weight: bold;
+      color: #5c3d2e;
+    }
+
+    ul#lista-favoritos {
+      list-style: none;
+      padding: 0;
+      max-width: 500px;
+      margin: 0 auto 40px auto;
+      text-align: left;
+    }
+
+    ul#lista-favoritos li {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.15);
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      color: #5c3d2e;
+      font-family: 'Special Elite', monospace;
+      font-size: 18px;
+      position: relative;
+      transition: transform 0.3s;
+    }
+
+    ul#lista-favoritos li:hover {
+      transform: scale(1.03);
+    }
+
+    ul#lista-favoritos li.no-fav {
+      background-color: var(--rosa-suave);
+      font-style: italic;
+      color: #6b4f5f;
+      text-align: center;
+      cursor: default;
+    }
+
+    ul#lista-favoritos li button {
+      background-color: var(--lila-categoria);
+      border: none;
+      color: #000;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-family: 'Special Elite', monospace;
+      font-size: 16px;
+    }
+
+    ul#lista-favoritos li button:hover {
+      background-color: var(--lila-hover);
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="Imagenes/Index/Logo.jpg" alt="Logo Papelería Mary" />
+    </div>
+    <h1>⭐ Productos Favoritos</h1>
+  </header>
+
+  <a href="index mejorado .html" class="volver-btn">← Volver al inicio</a>
+
+  <div id="contador-compras">Has comprado 0 productos</div>
+
+  <ul id="lista-favoritos"></ul>
+
+  <script>
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    const compras = JSON.parse(localStorage.getItem('carrito')) || []; // Aquí asumo que las compras se guardan en 'carrito'
+    const lista = document.getElementById('lista-favoritos');
+    const contador = document.getElementById('contador-compras');
+
+    // Mapeo productos a URL - adapta las URLs a las reales de tus productos
+    const urlProductos = {
+      'Notas Adhesivas Personalizadas': 'notas.html',
+      'Cuadernos con Nombre': 'cuadernos.html',
+      'Plumas Grabadas': 'plumas.html',
+      'Sellos con Nombre': 'sellos.html',
+      'Calendarios Personalizados': 'calendarios.html'
+    };
+
+    contador.textContent = `Has comprado ${compras.length} producto${compras.length !== 1 ? 's' : ''}`;
+
+    if (favoritos.length === 0) {
+      lista.innerHTML = '<li class="no-fav">No tienes productos favoritos aún.</li>';
+    } else {
+      lista.innerHTML = favoritos.map(nombre => {
+        const url = urlProductos[nombre] || '#';
+        return `
+          <li>
+            <span>${nombre}</span>
+            <button onclick="window.location.href='${url}'">Ver producto</button>
+          </li>
+        `;
+      }).join('');
+    }
+  </script>
+
+</body>
+</html>

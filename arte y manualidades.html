@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Papelería Mary - Productos</title>
+
+  <!-- Tipografías estilo vintage -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --rosa-suave: #F8D7DA;
+      --rosa-banner: #FDE4E4;
+      --lila-categoria: #D19FC2;
+      --lila-hover: #ba8cb5;
+      --beige-claro: #fffaf7;
+    }
+
+    body {
+      font-family: 'Special Elite', monospace;
+      background-color: var(--beige-claro);
+      background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #3e2c1c;
+    }
+
+    header {
+      background-color: var(--rosa-suave);
+      padding: 30px;
+      box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo img {
+      width: 120px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 32px;
+      margin-top: 10px;
+      color: #5c3d2e;
+    }
+
+    .volver-btn {
+      margin: 20px auto;
+      display: inline-block;
+      background-color: var(--lila-categoria);
+      color: #000;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .volver-btn:hover {
+      background-color: var(--lila-hover);
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .product {
+      background-color: #fff;
+      padding: 15px;
+      width: 200px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s;
+      position: relative;
+    }
+
+    .product:hover {
+      transform: scale(1.03);
+    }
+
+    .product img {
+      width: 100px;
+      height: auto;
+    }
+
+    .product h3 {
+      margin: 10px 0 5px;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #5c3d2e;
+    }
+
+    .btn {
+      margin-top: 10px;
+      background-color: var(--lila-categoria);
+      color: #000;
+      padding: 10px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: var(--lila-hover);
+    }
+
+    footer {
+      background-color: var(--lila-categoria);
+      padding: 20px;
+      color: #3a2e1d;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #3a2e1d;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .floating-cart {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--lila-categoria);
+      color: #000;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 30px;
+      text-align: center;
+      line-height: 60px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    .cart-modal {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      background-color: #fff;
+      color: #000;
+      border: 2px solid var(--lila-categoria);
+      padding: 15px;
+      border-radius: 10px;
+      width: 250px;
+      max-height: 300px;
+      overflow-y: auto;
+      display: none;
+      z-index: 1000;
+      text-align: left;
+    }
+
+    .star {
+      font-size: 20px;
+      color: #ccc;
+      cursor: pointer;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      transition: color 0.3s;
+    }
+
+    .star.fav {
+      color: gold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="Imagenes/Index/Logo.jpg" alt="Logo Papelería Mary">
+    </div>
+    <h1>Materializando tu imaginación</h1>
+  </header>
+
+  <a href="productos.html" class="volver-btn">← Volver al catálogo</a>
+
+<section class="catalogo">
+  <h2>Artículos de Artes y Manualidades</h2>
+  <div class="container">
+    <!-- Producto 1 -->
+    <div class="product">
+      <span class="star">★</span>
+      <img src="Imagenes/Arte/a1.jpg" alt="Pinturas Acrílicas">
+      <h3>Pinturas Acrílicas</h3>
+      <p class="price">$55.00 MXN</p>
+      <button class="btn" onclick="agregarAlCarrito('Pinturas Acrílicas', 55)">Agregar al carrito</button>
+    </div>
+
+    <!-- Producto 2 -->
+    <div class="product">
+      <span class="star">★</span>
+      <img src="Imagenes/Arte/a2.jpg" alt="Paleta de Madera">
+      <h3>Paleta de Madera</h3>
+      <p class="price">$35.00 MXN</p>
+      <button class="btn" onclick="agregarAlCarrito('Paleta de Madera', 35)">Agregar al carrito</button>
+    </div>
+
+    <!-- Producto 3 -->
+    <div class="product">
+      <span class="star">★</span>
+      <img src="Imagenes/Arte/a3.jpg" alt="Lienzo para Pintura">
+      <h3>Lienzo para Pintura</h3>
+      <p class="price">$48.00 MXN</p>
+      <button class="btn" onclick="agregarAlCarrito('Lienzo para Pintura', 48)">Agregar al carrito</button>
+    </div>
+
+  <div class="product">
+  <span class="star">★</span>
+  <img src="Imagenes/Arte/a4.jpg" alt="Set de Acuarelas">
+  <h3>Set de Acuarelas</h3>
+  <p class="price">$60.00 MXN</p>
+  <button class="btn" onclick="agregarAlCarrito('Set de Acuarelas', 60)">Agregar al carrito</button>
+</div>
+
+<div class="product">
+  <span class="star">★</span>
+  <img src="Imagenes/Arte/a5.jpg" alt="Pinceles para Pintura">
+  <h3>Pinceles para Pintura</h3>
+  <p class="price">$35.00 MXN</p>
+  <button class="btn" onclick="agregarAlCarrito('Pinceles para Pintura', 35)">Agregar al carrito</button>
+</div>
+
+<div class="product">
+  <span class="star">★</span>
+  <img src="Imagenes/Arte/a6.jpg" alt="Paleta de Mezcla">
+  <h3>Paleta de Mezcla</h3>
+  <p class="price">$22.00 MXN</p>
+  <button class="btn" onclick="agregarAlCarrito('Paleta de Mezcla', 22)">Agregar al carrito</button>
+</div>
+
+<div class="product">
+  <span class="star">★</span>
+  <img src="Imagenes/Arte/a7.jpg" alt="Caballete de Madera">
+  <h3>Caballete de Madera</h3>
+  <p class="price">$120.00 MXN</p>
+  <button class="btn" onclick="agregarAlCarrito('Caballete de Madera', 120)">Agregar al carrito</button>
+</div>
+
+<div class="product">
+  <span class="star">★</span>
+  <img src="Imagenes/Arte/a8.jpg" alt="Set de Carboncillos">
+  <h3>Set de Carboncillos</h3>
+  <p class="price">$40.00 MXN</p>
+  <button class="btn" onclick="agregarAlCarrito('Set de Carboncillos', 40)">Agregar al carrito</button>
+</div>
+
+<div class="product">
+  <span class="star">★</span>
+  <img src="Imagenes/Arte/a9.jpg" alt="Esponjas para Pintura">
+  <h3>Esponjas para Pintura</h3>
+  <p class="price">$18.00 MXN</p>
+  <button class="btn" onclick="agregarAlCarrito('Esponjas para Pintura', 18)">Agregar al carrito</button>
+</div>
+
+<div class="product">
+  <span class="star">★</span>
+  <img src="Imagenes/Arte/b1.jpg" alt="Porta Lienzos">
+  <h3>Porta Lienzos</h3>
+  <p class="price">$95.00 MXN</p>
+  <button class="btn" onclick="agregarAlCarrito('Porta Lienzos', 95)">Agregar al carrito</button>
+</div>
+
+</section>
+
+
+  <div class="floating-cart" id="cartButton">🛒</div>
+  <div class="cart-modal" id="cartModal"></div>
+
+  <footer>
+    <p>Tel: +52 5538113903</p>
+    <p>Email: <a href="mailto:Marypape2219@gmail.com">Marypape2219@gmail.com</a></p>
+    <p>&copy; 2025 Papelería Mary | Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    function agregarAlCarrito(nombre, precio) {
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      carrito.push({ nombre, precio });
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      alert(`"${nombre}" se ha agregado al carrito.`);
+    }
+
+    const cartBtn = document.getElementById('cartButton');
+    const cartModal = document.getElementById('cartModal');
+
+    cartBtn.addEventListener('click', () => {
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      if (carrito.length === 0) {
+        cartModal.innerHTML = '<h4>🛍 Tu carrito está vacío</h4>';
+      } else {
+        cartModal.innerHTML = `
+          <h4>🛍 Tu carrito:</h4>
+          <ul>${carrito.map(p => `<li>${p.nombre} - $${p.precio}</li>`).join('')}</ul>
+          <button id="clearCart">Borrar todo</button>
+          <button id="checkout">Pagar</button>
+        `;
+      }
+      cartModal.style.display = cartModal.style.display === 'block' ? 'none' : 'block';
+
+      document.getElementById('clearCart')?.addEventListener('click', () => {
+        localStorage.removeItem('carrito');
+        cartModal.innerHTML = '<h4>🛍 Tu carrito está vacío</h4>';
+      });
+
+      document.getElementById('checkout')?.addEventListener('click', () => {
+        window.location.href = 'comprar.html';
+      });
+    });
+
+    // Favoritos (estrellitas)
+    document.querySelectorAll('.product').forEach(product => {
+      const nombre = product.querySelector('h3').innerText;
+      const star = product.querySelector('.star');
+      let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+      if (favoritos.includes(nombre)) {
+        star.classList.add('fav');
+      }
+
+      star.addEventListener('click', () => {
+        let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+        if (favoritos.includes(nombre)) {
+          favoritos = favoritos.filter(n => n !== nombre);
+          star.classList.remove('fav');
+        } else {
+          favoritos.push(nombre);
+          star.classList.add('fav');
+        }
+        localStorage.setItem('favoritos', JSON.stringify(favoritos));
+      });
+    });
+  </script>
+</body>
+</html>

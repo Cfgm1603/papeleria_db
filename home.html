@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Papelería Mary</title>
+
+  <!-- Fuentes Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Special Elite', monospace;
+      background-color: #fff0f2;
+      background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #3e2c1c;
+    }
+
+    header {
+      background-color: #F8D7DA;
+      padding: 30px;
+      box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo img {
+      width: 120px;
+      border-radius: 8px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 32px;
+      color: #5c3d2e;
+      margin-top: 10px;
+    }
+
+    .bienvenida {
+      background-color: #FDE4E4;
+      margin: 30px auto;
+      padding: 30px;
+      width: 85%;
+      border-radius: 10px;
+      box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .bienvenida h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: 28px;
+      color: #684b33;
+    }
+
+    .bienvenida p {
+      font-size: 18px;
+      font-style: italic;
+      color: #5a4533;
+    }
+
+    .boton-inicio {
+      margin-top: 20px;
+      background-color: #D19FC2;
+      color: #3a2e1d;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .boton-inicio:hover {
+      background-color: #f8d7da;
+      transform: scale(1.05);
+    }
+
+    .contador {
+      margin-top: 25px;
+      font-size: 16px;
+      color: #3e2c1c;
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: #D19FC2;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #3a2e1d;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #3a2e1d;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <img src="Imagenes/Index/Logo.jpg" alt="Logo Papelería Mary" />
+    </div>
+    <h1>Papelería Mary</h1>
+  </header>
+
+  <section class="bienvenida">
+    <h2>¡Bienvenidos!</h2>
+    <p>Gracias por visitar nuestro sitio. Aquí encontrarás todo para tu papelería y oficina.</p>
+    <a class="boton-inicio" href="index mejorado .html">📦 Ir al catálogo</a>
+    <div class="contador" id="contadorVisitas">👁️ Visitas: cargando...</div>
+  </section>
+
+  <footer>
+    <p>© 2025 Papelería Mary. Todos los derechos reservados. | <a href="mailto:contacto@papeleriamary.com">Contacto</a></p>
+  </footer>
+
+<script>
+  const contadorElemento = document.getElementById("contadorVisitas");
+
+  // Solo contar si no se ha contado esta sesión
+  if (!sessionStorage.getItem("visitaContada")) {
+    let visitas = localStorage.getItem("contadorVisitasMary");
+
+    if (!visitas) {
+      visitas = 1;
+    } else {
+      visitas = parseInt(visitas) + 1;
+    }
+
+    localStorage.setItem("contadorVisitasMary", visitas);
+    sessionStorage.setItem("visitaContada", "true");
+  }
+
+  // Mostrar el número de visitas actual
+  const visitasActuales = localStorage.getItem("contadorVisitasMary") || 1;
+  contadorElemento.textContent = "👁️ Visitas: " + visitasActuales;
+</script>
+
+</body>
+</html>

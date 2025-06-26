@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Papelería Mary - Productos</title>
+
+  <!-- Tipografías estilo vintage -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --rosa-suave: #F8D7DA;
+      --rosa-banner: #FDE4E4;
+      --lila-categoria: #D19FC2;
+      --lila-hover: #ba8cb5;
+      --beige-claro: #fffaf7;
+    }
+
+    body {
+      font-family: 'Special Elite', monospace;
+      background-color: var(--beige-claro);
+      background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #3e2c1c;
+    }
+
+    header {
+      background-color: var(--rosa-suave);
+      padding: 30px;
+      box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo img {
+      width: 120px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 32px;
+      margin-top: 10px;
+      color: #5c3d2e;
+    }
+
+    .volver-btn {
+      margin: 20px auto;
+      display: inline-block;
+      background-color: var(--lila-categoria);
+      color: #000;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .volver-btn:hover {
+      background-color: var(--lila-hover);
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .product {
+      background-color: #fff;
+      padding: 15px;
+      width: 200px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+      position: relative;
+      transition: transform 0.3s;
+    }
+
+    .product:hover {
+      transform: scale(1.03);
+    }
+
+    .product img {
+      width: 100px;
+      height: auto;
+    }
+
+    .product h3 {
+      margin: 10px 0 5px;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #5c3d2e;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      background-color: var(--lila-categoria);
+      color: #000;
+      padding: 10px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      transition: background-color 0.3s;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: var(--lila-hover);
+    }
+
+    /* Estrella de favorito */
+    .star {
+      font-size: 20px;
+      color: #ccc;
+      cursor: pointer;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      transition: color 0.3s;
+      user-select: none;
+    }
+
+    .star.fav {
+      color: gold;
+    }
+
+    /* Carrito flotante */
+    .floating-cart {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--lila-categoria);
+      color: #000;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 30px;
+      text-align: center;
+      line-height: 60px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    /* Modal carrito */
+    .cart-modal {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      background-color: #fff;
+      color: #000;
+      border: 2px solid var(--lila-categoria);
+      padding: 15px;
+      border-radius: 10px;
+      width: 250px;
+      max-height: 300px;
+      overflow-y: auto;
+      display: none;
+      z-index: 1000;
+      box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
+      text-align: left;
+    }
+
+    footer {
+      background-color: var(--lila-categoria);
+      padding: 20px;
+      color: #3a2e1d;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #3a2e1d;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="Imagenes/Index/Logo.jpg" alt="Logo Papelería Mary" />
+    </div>
+    <h1>Materializando tu imaginación</h1>
+  </header>
+
+  <a href="productos.html" class="volver-btn">← Volver al catálogo</a>
+
+  <section class="container" id="catalogo">
+    <div class="product">
+      <span class="star">★</span>
+      <img src="Imagenes/Utiles escolares/geometria.jpg" alt="Juego de geometría" />
+      <h3>Juegos de Geometría</h3>
+      <div class="price">$50.00</div>
+      <a href="#" class="btn" data-nombre="Juegos de Geometría" data-precio="50.00">Agregar al carrito</a>
+    </div>
+
+    <div class="product">
+      <span class="star">★</span>
+      <img src="Imagenes/Utiles escolares/plumones.jpg" alt="Plumones" />
+      <h3>Plumones</h3>
+      <div class="price">$30.00</div>
+      <a href="#" class="btn" data-nombre="Plumones" data-precio="30.00">Agregar al carrito</a>
+    </div>
+
+    <div class="product">
+      <span class="star">★</span>
+      <img src="Imagenes/Utiles escolares/colores.jpg" alt="Lápices de colores" />
+      <h3>Lápices de colores</h3>
+      <div class="price">$40.00</div>
+      <a href="#" class="btn" data-nombre="Lápices de colores" data-precio="40.00">Agregar al carrito</a>
+    </div>
+
+    <div class="product">
+      <span class="star">★</span>
+      <img src="Imagenes/Utiles escolares/estuche.jpg" alt="Estuche" />
+      <h3>Estuche</h3>
+      <div class="price">$45.00</div>
+      <a href="#" class="btn" data-nombre="Estuche" data-precio="45.00">Agregar al carrito</a>
+    </div>
+
+    <div class="product">
+      <span class="star">★</span>
+      <img src="Imagenes/Utiles escolares/mochila.jpg" alt="Mochila infantil" />
+      <h3>Mochila infantil</h3>
+      <div class="price">$25.00</div>
+      <a href="#" class="btn" data-nombre="Mochila infantil" data-precio="25.00">Agregar al carrito</a>
+    </div>
+    <div class="product">
+  <span class="star">★</span>
+  <img src="Imagenes/Utiles escolares/u1.jpg" alt="Lápices de grafito" />
+  <h3>Lápices de grafito</h3>
+  <div class="price">$10.00</div>
+  <a href="#" class="btn" data-nombre="Lápices de grafito" data-precio="10.00">Agregar al carrito</a>
+</div>
+
+<div class="product">
+  <span class="star">★</span>
+  <img src="Imagenes/Utiles escolares/u2.jpg" alt="Bolígrafos de colores" />
+  <h3>Bolígrafos de colores</h3>
+  <div class="price">$18.00</div>
+  <a href="#" class="btn" data-nombre="Bolígrafos de colores" data-precio="18.00">Agregar al carrito</a>
+</div>
+
+<div class="product">
+  <span class="star">★</span>
+  <img src="Imagenes/Utiles escolares/u3.jpg" alt="Cartulina escolar" />
+  <h3>Cartulina escolar</h3>
+  <div class="price">$8.00</div>
+  <a href="#" class="btn" data-nombre="Cartulina escolar" data-precio="8.00">Agregar al carrito</a>
+</div>
+
+<div class="product">
+  <span class="star">★</span>
+  <img src="Imagenes/Utiles escolares/u4.jpg" alt="Marcatextos fluorescentes" />
+  <h3>Marcatextos fluorescentes</h3>
+  <div class="price">$22.00</div>
+  <a href="#" class="btn" data-nombre="Marcatextos fluorescentes" data-precio="22.00">Agregar al carrito</a>
+</div>
+
+<div class="product">
+  <span class="star">★</span>
+  <img src="Imagenes/Utiles escolares/u5.jpg" alt="Corrector líquido" />
+  <h3>Corrector líquido</h3>
+  <div class="price">$12.00</div>
+  <a href="#" class="btn" data-nombre="Corrector líquido" data-precio="12.00">Agregar al carrito</a>
+</div>
+
+  </section>
+
+  <div class="floating-cart" id="cartButton">🛒</div>
+  <div class="cart-modal" id="cartModal"></div>
+
+  <footer>
+    <p>Tel: +52 5538113903</p>
+    <p>Email: <a href="mailto:Marypape2219@gmail.com">Marypape2219@gmail.com</a></p>
+    <p>&copy; 2025 Papelería Mary | Todos los derechos reservados</p>
+  </footer>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Favoritos (estrellas)
+    const stars = document.querySelectorAll('.star');
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        star.classList.toggle('fav');
+      });
+    });
+
+    // Carrito
+    const cartButton = document.getElementById('cartButton');
+    const cartModal = document.getElementById('cartModal');
+    const addButtons = document.querySelectorAll('.btn');
+
+    let cart = [];
+
+    // Mostrar/Ocultar modal carrito
+    cartButton.addEventListener('click', () => {
+      if (cartModal.style.display === 'block') {
+        cartModal.style.display = 'none';
+      } else {
+        renderCart();
+        cartModal.style.display = 'block';
+      }
+    });
+
+    // Agregar producto al carrito
+    addButtons.forEach(button => {
+      button.addEventListener('click', e => {
+        e.preventDefault();
+
+        const nombre = button.getAttribute('data-nombre');
+        const precio = parseFloat(button.getAttribute('data-precio'));
+
+        // Verificar si el producto ya está en el carrito
+        const existingProduct = cart.find(item => item.nombre === nombre);
+
+        if (existingProduct) {
+          existingProduct.cantidad++;
+        } else {
+          cart.push({ nombre, precio, cantidad: 1 });
+        }
+
+        renderCart();
+        cartModal.style.display = 'block';
+      });
+    });
+
+    // Renderizar carrito
+    function renderCart() {
+      if (cart.length === 0) {
+        cartModal.innerHTML = '<p>🛍 Tu carrito está vacío.</p>';
+        return;
+      }
+
+      let html = '<ul style="padding-left: 20px;">';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const subtotal = item.precio * item.cantidad;
+        total += subtotal;
+        html += `
+          <li style="margin-bottom: 8px;">
+            ${item.nombre} - $${item.precio.toFixed(2)} x ${item.cantidad} = $${subtotal.toFixed(2)} 
+            <button style="margin-left: 10px; cursor:pointer;" data-index="${index}" class="remove-btn">X</button>
+          </li>
+        `;
+      });
+
+      html += `</ul>
+        <hr>
+        <p><strong>Total: $${total.toFixed(2)}</strong></p>
+        <button id="clearCart" style="margin-right:10px; background-color:#ba8cb5; color:#000; border:none; padding:8px; border-radius:5px; cursor:pointer;">Borrar todo</button>
+        <button id="checkout" style="background-color:#5c3d2e; color:#fff; border:none; padding:8px; border-radius:5px; cursor:pointer;">Pagar</button>
+      `;
+      cartModal.innerHTML = html;
+
+      // Añadir funcionalidad para eliminar producto
+      const removeButtons = cartModal.querySelectorAll('.remove-btn');
+      removeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.getAttribute('data-index'));
+          cart.splice(idx, 1);
+          renderCart();
+        });
+      });
+
+      // Botón borrar todo
+      const clearBtn = document.getElementById('clearCart');
+      clearBtn.addEventListener('click', () => {
+        cart = [];
+        renderCart();
+      });
+
+      // Botón pagar
+      const checkoutBtn = document.getElementById('checkout');
+      checkoutBtn.addEventListener('click', () => {
+        window.location.href = 'comprar.html';
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

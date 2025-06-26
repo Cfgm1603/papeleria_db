@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Comprar - Papelería Mary</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Special+Elite&display=swap');
+
+    body {
+      font-family: 'Special Elite', monospace;
+      background: linear-gradient(to right, #ffe6f0, #fffaf7);
+      color: #3e2c1c;
+      margin: 0;
+      padding: 20px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1, h2 {
+      font-family: 'Pacifico', cursive;
+      color: #5c3d2e;
+      text-align: center;
+      margin-bottom: 10px;
+      animation: slideUp 0.8s ease-out;
+    }
+
+    .categoria {
+      margin-bottom: 40px;
+      background: #f8d7da;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 4px 4px 12px rgba(186, 140, 181, 0.3);
+      transition: transform 0.3s;
+    }
+
+    .categoria:hover {
+      transform: scale(1.02);
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 10px;
+    }
+
+    li {
+      padding: 8px 12px;
+      background: #fff0f2;
+      margin: 6px 0;
+      border-radius: 8px;
+      box-shadow: inset 2px 2px 5px rgba(107, 91, 60, 0.1);
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    li:hover {
+      background: #ffe2eb;
+    }
+
+    .total {
+      font-weight: bold;
+      font-size: 1.4em;
+      margin-top: 30px;
+      text-align: right;
+      color: #5c3d2e;
+      text-shadow: 1px 1px 2px #d19fc2;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .vacío {
+      font-style: italic;
+      color: #999;
+      text-align: center;
+      font-size: 1.2em;
+      margin-top: 50px;
+      opacity: 0.7;
+    }
+
+    .botones {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    button {
+      background-color: #d19fc2;
+      color: #3e2c1c;
+      font-family: 'Pacifico', cursive;
+      font-size: 1.1em;
+      font-weight: bold;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 2px 2px 8px rgba(107, 91, 60, 0.4);
+      transition: background-color 0.3s ease, transform 0.2s;
+      min-width: 160px;
+    }
+
+    button:hover {
+      background-color: #ba8cb5;
+      color: #fffaf7;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 480px) {
+      .botones {
+        flex-direction: column;
+        gap: 15px;
+      }
+      button {
+        width: 100%;
+      }
+    }
+
+    #mensajeCompra {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background: #d1e7dd;
+      color: #0f5132;
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px rgba(15, 81, 50, 0.3);
+      font-weight: bold;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    #mensajeCompra button {
+      background-color: #5c3d2e;
+      color: #fffaf7;
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: none;
+      font-family: 'Pacifico', cursive;
+      font-weight: bold;
+      font-size: 1em;
+    }
+
+    #mensajeCompra button:hover {
+      background-color: #4a2f22;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 2px solid #d19fc2;
+      border-radius: 8px;
+      font-family: 'Special Elite', monospace;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #ba8cb5;
+      outline: none;
+      background: #fff0f8;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+      color: #5c3d2e;
+      margin-bottom: 4px;
+    }
+
+    form {
+      background: #fdeff5;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 2px 2px 10px rgba(186, 140, 181, 0.3);
+      margin-top: 30px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🛒 Resumen de tu compra</h1>
+
+  <div id="carritoContainer"></div>
+
+  <!-- FORMULARIO AGREGADO -->
+  <form id="formPedido" method="POST" action="procesar_pedido.php">
+    <h2>Datos para el pedido</h2>
+
+    <label for="nombre_cliente">Nombre completo *</label>
+    <input type="text" id="nombre_cliente" name="nombre_cliente" required />
+
+    <label for="email">Correo electrónico *</label>
+    <input type="email" id="email" name="email" required />
+
+    <label for="telefono">Teléfono</label>
+    <input type="tel" id="telefono" name="telefono" />
+
+    <label for="direccion">Dirección de entrega *</label>
+    <textarea id="direccion" name="direccion" rows="3" required></textarea>
+
+    <input type="hidden" name="carrito" id="inputCarrito" />
+    <input type="hidden" name="total" id="inputTotal" />
+
+    <button type="submit">Finalizar compra</button>
+  </form>
+  <!-- FIN FORMULARIO -->
+
+  <div class="botones">
+    <button id="finalizarCompraBtn">Finalizar compra</button>
+    <button id="regresarCatalogoBtn">← Regresar al catálogo</button>
+  </div>
+
+  <div id="mensajeCompra">
+    Gracias por tu compra. Próximamente te enviaremos detalles para el pago y entrega.
+    <br />
+    <button id="volverInicio">Volver al inicio</button>
+  </div>
+
+  <script>
+    const categorias = [
+      "Papelería básica",
+      "Útiles escolares",
+      "Material de oficina",
+      "Arte y manualidades",
+      "Impresión y tecnología",
+      "Papelería personalizada",
+      "Regalos y complementos",
+      "Ofertas"
+    ];
+
+    function agruparPorCategoria(items) {
+      const agrupado = {};
+      categorias.forEach(cat => agrupado[cat] = []);
+      agrupado["Otros"] = [];
+
+      items.forEach(item => {
+        if(item.categoria && categorias.includes(item.categoria)) {
+          agrupado[item.categoria].push(item);
+        } else {
+          agrupado["Otros"].push(item);
+        }
+      });
+
+      return agrupado;
+    }
+
+    function mostrarCarrito() {
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+      if(carrito.length === 0){
+        document.getElementById('carritoContainer').innerHTML = `<p class="vacío">Tu carrito está vacío.</p>`;
+        return;
+      }
+
+      const agrupado = agruparPorCategoria(carrito);
+      let html = "";
+
+      for(const cat of categorias.concat("Otros")){
+        if(agrupado[cat] && agrupado[cat].length > 0){
+          html += `<div class="categoria">
+            <h2>${cat}</h2>
+            <ul>`;
+          agrupado[cat].forEach(item => {
+            html += `<li>${item.nombre} - $${item.precio.toFixed(2)} MXN</li>`;
+          });
+          html += `</ul></div>`;
+        }
+      }
+
+      const total = carrito.reduce((acc, item) => acc + item.precio, 0);
+      html += `<p class="total">Total a pagar: $${total.toFixed(2)} MXN</p>`;
+
+      document.getElementById('carritoContainer').innerHTML = html;
+    }
+
+    mostrarCarrito();
+
+    document.getElementById('formPedido').addEventListener('submit', (e) => {
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      if (carrito.length === 0) {
+        e.preventDefault();
+        alert("Tu carrito está vacío, no puedes hacer un pedido.");
+        return;
+      }
+      document.getElementById('inputCarrito').value = JSON.stringify(carrito);
+      const total = carrito.reduce((acc, item) => acc + item.precio, 0);
+      document.getElementById('inputTotal').value = total.toFixed(2);
+      localStorage.removeItem('carrito');
+    });
+
+    document.getElementById('finalizarCompraBtn').addEventListener('click', () => {
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      if(carrito.length === 0){
+        alert("Tu carrito está vacío, no hay nada que comprar.");
+        return;
+      }
+
+      document.getElementById('mensajeCompra').style.display = 'block';
+      document.getElementById('carritoContainer').style.display = 'none';
+      document.querySelector('.botones').style.display = 'none';
+      localStorage.removeItem('carrito');
+    });
+
+    document.getElementById('regresarCatalogoBtn').addEventListener('click', () => {
+      window.location.href = 'productos.html';
+    });
+
+    document.getElementById('volverInicio').addEventListener('click', () => {
+      window.location.href = 'home.html';
+    });
+  </script>
+
+</body>
+</html>

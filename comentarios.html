@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Papelería Mary - Formulario</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=UnifrakturCook&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Cinzel', serif;
+      background: linear-gradient(135deg, #1f1a17, #3a332f);
+      color: #d6c9b8;
+      padding: 20px;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    form {
+      background: #2e2720;
+      padding: 35px 40px;
+      border: 3px solid #6b5b3c;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.9);
+      max-width: 550px;
+      width: 100%;
+      color: #d6c9b58f;
+    }
+
+    h2 {
+      text-align: center;
+      font-family: 'UnifrakturCook', cursive;
+      font-size: 34px;
+      margin-bottom: 25px;
+      color: #c9b58f;
+      text-shadow: 1px 1px 5px #4a3f2a;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 700;
+      font-size: 16px;
+      color: #b9a776;
+      letter-spacing: 0.05em;
+      text-shadow: 1px 1px 2px #3a3020;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-top: 6px;
+      border: 2px solid #6b5b3c;
+      border-radius: 12px;
+      background-color: #433b30;
+      font-size: 16px;
+      color: #d6c9b8;
+      font-family: 'Cinzel', serif;
+      box-shadow: inset 1px 1px 5px #2f2a1f;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #c9b58f;
+      outline: none;
+      background-color: #534934;
+      box-shadow: 0 0 8px #c9b58f;
+      color: #f0e8d2;
+    }
+
+    textarea {
+      resize: none;
+      min-height: 100px;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 14px 26px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      font-family: 'Cinzel', serif;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.7);
+      user-select: none;
+    }
+
+    .enviar {
+      background-color: #b49f63;
+      color: #2f2a1f;
+      text-shadow: 1px 1px 2px #5a523a;
+    }
+
+    .enviar:hover {
+      background-color: #d1bf8a;
+      transform: scale(1.05);
+      color: #3a332f;
+      text-shadow: none;
+    }
+
+    .limpiar {
+      background-color: #4c4030;
+      color: #c9b58f;
+      margin-left: 12px;
+      text-shadow: 1px 1px 2px #1a1611;
+    }
+
+    .limpiar:hover {
+      background-color: #6b5b3c;
+      color: #fff;
+    }
+
+    .boton-flotante {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background-color: #6b5b3c;
+      color: #d6c9b8;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9);
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .boton-flotante:hover {
+      background-color: #c9b58f;
+      color: #2f2a1f;
+    }
+  </style>
+</head>
+<body>
+
+<!-- FORMULARIO ÚNICO con acción y método -->
+<form id="formulario" action="guardar_comentario.php" method="POST">
+  <h2>🖋️ Formulario Papelería Mary</h2>
+
+  <label for="nombre">📜 Nombre completo:</label>
+  <input type="text" id="nombre" name="nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo letras, espacios y acentos." />
+
+  <label for="telefono">📞 Número telefónico:</label>
+  <input type="tel" id="telefono" name="telefono" required pattern="^(?!([0-9])\1{9})\d{10}$" title="Debe tener exactamente 10 dígitos y no pueden ser todos iguales." />
+
+  <label for="correo">✉️ Correo electrónico:</label>
+  <input type="email" id="correo" name="correo" required />
+
+  <label for="servicio">📦 ¿Cómo calificarías el servicio?</label>
+  <select id="servicio" name="servicio" required>
+    <option value="">Selecciona una opción</option>
+    <option value="Excelente">Excelente</option>
+    <option value="Bueno">Bueno</option>
+    <option value="Regular">Regular</option>
+    <option value="Malo">Malo</option>
+    <option value="Pésimo">Pésimo</option>
+  </select>
+
+  <label for="comentario">📝 Comentarios:</label>
+  <textarea id="comentario" name="comentario" rows="4" placeholder="Cuéntanos tu experiencia o consulta..." required></textarea>
+
+  <div style="text-align: center;">
+    <button type="submit" class="enviar">✨ Enviar</button>
+    <button type="button" class="limpiar" onclick="confirmarLimpieza()">🧼 Limpiar</button>
+  </div>
+</form>
+
+<button class="boton-flotante" onclick="window.location.href='index mejorado .html'" title="Volver al inicio">🏠</button>
+
+<script>
+  document.getElementById("formulario").addEventListener("submit", function(event) {
+    const nombre = document.getElementById("nombre").value.trim();
+    const telefono = document.getElementById("telefono").value.trim();
+    const correo = document.getElementById("correo").value.trim();
+    const servicio = document.getElementById("servicio").value;
+    const comentario = document.getElementById("comentario").value.trim();
+
+    const nombreRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+    const telefonoRegex = /^(?!([0-9])\1{9})\d{10}$/;
+
+    if (!nombreRegex.test(nombre)) {
+      alert("❌ El nombre solo puede contener letras, espacios y acentos.");
+      event.preventDefault();
+      return;
+    }
+
+    if (!telefonoRegex.test(telefono)) {
+      alert("❌ El número telefónico debe tener exactamente 10 dígitos y no pueden ser todos iguales.");
+      event.preventDefault();
+      return;
+    }
+
+    if (!correo) {
+      alert("❌ Por favor, ingresa un correo electrónico válido.");
+      event.preventDefault();
+      return;
+    }
+
+    if (servicio === "") {
+      alert("❌ Por favor califica el servicio.");
+      event.preventDefault();
+      return;
+    }
+
+    if (!comentario) {
+      alert("❌ El campo de comentarios no puede estar vacío.");
+      event.preventDefault();
+      return;
+    }
+
+    if (!confirm("¿Estás seguro de que deseas enviar el formulario?")) {
+      event.preventDefault();
+    }
+    // Si todo pasa, el formulario se enviará normalmente a guardar_comentario.php
+  });
+
+  function confirmarLimpieza() {
+    if (confirm("¿Estás seguro de que deseas borrar toda la información del formulario?")) {
+      document.getElementById("formulario").reset();
+    }
+  }
+</script>
+
+</body>
+</html>

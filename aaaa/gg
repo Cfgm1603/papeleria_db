@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Comprar - Papelería Mary</title>
+
+  <style>
+    body {
+      font-family: 'Special Elite', monospace;
+      background-color: #fffaf7;
+      color: #3e2c1c;
+      margin: 0;
+      padding: 20px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h1, h2 {
+      font-family: 'Pacifico', cursive;
+      color: #5c3d2e;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .categoria {
+      margin-bottom: 40px;
+      background: #f8d7da;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(107, 91, 60, 0.2);
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 10px;
+    }
+
+    li {
+      padding: 8px 12px;
+      background: #fff0f2;
+      margin: 6px 0;
+      border-radius: 8px;
+      box-shadow: inset 2px 2px 5px rgba(107, 91, 60, 0.1);
+      font-weight: 600;
+    }
+
+    .total {
+      font-weight: bold;
+      font-size: 1.4em;
+      margin-top: 30px;
+      text-align: right;
+      color: #5c3d2e;
+      text-shadow: 1px 1px 2px #d19fc2;
+    }
+
+    .vacío {
+      font-style: italic;
+      color: #999;
+      text-align: center;
+      font-size: 1.2em;
+      margin-top: 50px;
+    }
+
+    .botones {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background-color: #d19fc2;
+      color: #3e2c1c;
+      font-family: 'Pacifico', cursive;
+      font-size: 1.1em;
+      font-weight: bold;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 2px 2px 8px rgba(107, 91, 60, 0.4);
+      transition: background-color 0.3s ease;
+      min-width: 160px;
+    }
+
+    button:hover {
+      background-color: #ba8cb5;
+      color: #fffaf7;
+    }
+
+    @media (max-width: 480px) {
+      .botones {
+        flex-direction: column;
+        gap: 15px;
+      }
+      button {
+        width: 100%;
+      }
+    }
+
+    #mensajeCompra {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background: #d1e7dd;
+      color: #0f5132;
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px rgba(15, 81, 50, 0.3);
+      font-weight: bold;
+    }
+
+    #mensajeCompra button {
+      background-color: #5c3d2e;
+      color: #fffaf7;
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: none;
+      font-family: 'Pacifico', cursive;
+      font-weight: bold;
+      font-size: 1em;
+    }
+
+    #mensajeCompra button:hover {
+      background-color: #4a2f22;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🛒 Resumen de tu compra</h1>
+
+  <div id="carritoContainer"></div>
+
+  <div class="botones">
+    <button id="finalizarCompraBtn">Finalizar compra</button>
+    <button id="regresarCatalogoBtn">← Regresar al catálogo</button>
+  </div>
+
+  <div id="mensajeCompra">
+    Gracias por tu compra. Próximamente te enviaremos detalles para el pago y entrega.
+    <br />
+    <button id="volverInicio">Volver al inicio</button>
+  </div>
+
+  <script>
+    const categorias = [
+      "Papelería básica",
+      "Útiles escolares",
+      "Material de oficina",
+      "Arte y manualidades",
+      "Impresión y tecnología",
+      "Papelería personalizada",
+      "Regalos y complementos",
+      "Ofertas"
+    ];
+
+    function agruparPorCategoria(items) {
+      const agrupado = {};
+      categorias.forEach(cat => agrupado[cat] = []);
+      agrupado["Otros"] = [];
+
+      items.forEach(item => {
+        if(item.categoria && categorias.includes(item.categoria)) {
+          agrupado[item.categoria].push(item);
+        } else {
+          agrupado["Otros"].push(item);
+        }
+      });
+
+      return agrupado;
+    }
+
+    function mostrarCarrito() {
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+      if(carrito.length === 0){
+        document.getElementById('carritoContainer').innerHTML = `<p class="vacío">Tu carrito está vacío.</p>`;
+        return;
+      }
+
+      const agrupado = agruparPorCategoria(carrito);
+      let html = "";
+
+      for(const cat of categorias.concat("Otros")){
+        if(agrupado[cat] && agrupado[cat].length > 0){
+          html += `<div class="categoria">
+            <h2>${cat}</h2>
+            <ul>`;
+          agrupado[cat].forEach(item => {
+            html += `<li>${item.nombre} - $${item.precio.toFixed(2)} MXN</li>`;
+          });
+          html += `</ul></div>`;
+        }
+      }
+
+      const total = carrito.reduce((acc, item) => acc + item.precio, 0);
+      html += `<p class="total">Total a pagar: $${total.toFixed(2)} MXN</p>`;
+
+      document.getElementById('carritoContainer').innerHTML = html;
+    }
+
+    mostrarCarrito();
+
+    document.getElementById('finalizarCompraBtn').addEventListener('click', () => {
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      if(carrito.length === 0){
+        alert("Tu carrito está vacío, no hay nada que comprar.");
+        return;
+      }
+
+      document.getElementById('mensajeCompra').style.display = 'block';
+      document.getElementById('carritoContainer').style.display = 'none';
+      document.querySelector('.botones').style.display = 'none';
+
+      localStorage.removeItem('carrito');
+    });
+
+    document.getElementById('regresarCatalogoBtn').addEventListener('click', () => {
+      window.location.href = 'productos.html'; // Cambia al archivo correcto del catálogo
+    });
+
+    document.getElementById('volverInicio').addEventListener('click', () => {
+      window.location.href = 'home.html'; // Cambia a tu página principal
+    });
+  </script>
+
+</body>
+</html>
