@@ -88,6 +88,6 @@ $stmt->execute([$nombre_cliente, $email, $telefono, $direccion, $carrito, $total
   <h1>¡Gracias por tu pedido, <?= htmlspecialchars($nombre_cliente) ?>!</h1>
   <p>Hemos recibido tu pedido correctamente.</p>
   <p>Nos pondremos en contacto contigo pronto para confirmar el pago y la entrega.</p>
-  <p><a href="index mejorado .html">Volver al inicio</a></p>
+  <p><a href="index.html">Volver al inicio</a></p>
 </body>
 </html>

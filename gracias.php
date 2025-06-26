@@ -27,7 +27,7 @@ $mensajeMostrar = $mensajes[$servicio] ?? "📩 Gracias por comunicarte con noso
   <div class="container" id="container">
     <h1>💖 ¡Gracias por tu mensaje!</h1>
     <p id="mensaje"><?= htmlspecialchars($mensajeMostrar) ?></p>
-    <a href="index mejorado .html" class="volver" title="Volver al inicio">🏠 Volver al inicio</a>
+    <a href="index.html" class="volver" title="Volver al inicio">🏠 Volver al inicio</a>
   </div>
   <script>
     window.addEventListener("DOMContentLoaded", () => {

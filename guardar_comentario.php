@@ -127,7 +127,7 @@ $mensajeMostrar = $mensajes[$servicioLower] ?? "📩 Gracias por comunicarte con
   <div class="container" id="container">
     <h1>💖 ¡Gracias por tu mensaje!</h1>
     <p id="mensaje"><?php echo htmlspecialchars($mensajeMostrar); ?></p>
-    <a href="index mejorado .html" class="volver" title="Volver al inicio">🏠 Volver al inicio</a>
+    <a href="index.html" class="volver" title="Volver al inicio">🏠 Volver al inicio</a>
   </div>
 
   <script>
